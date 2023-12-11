@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server/index.js",
-  "proxy": "https://mercury-uat.phonepe.com", 
+  
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && cross-env NODE_ENV=production webpack --mode production --config webpack/webpack.prod.js",
@@ -48,12 +48,13 @@
     "crypto": "^1.0.1",
     "dompurify": "^2.3.8",
     "dotenv": "^8.0.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "font-awesome": "^4.7.0",
     "helmet": "^4.6.0",
     "history": "^4.9.0",
     "html-to-pdfmake": "^2.4.22",
     "html2pdf.js": "^0.10.1",
+    "http-proxy-middleware": "^2.0.6",
     "jsonwebtoken": "^8.5.1",
     "mailchimp-api-v3": "^1.14.0",
     "mailgun-js": "^0.22.0",
@@ -72,7 +73,6 @@
     "razorpay": "^2.8.6",
     "rc-slider": "^9.7.2",
     "react": "^16.14.0",
-
     "react-autosuggest": "^10.1.0",
     "react-bootstrap-table-next": "^3.1.5",
     "react-bootstrap-table2-toolkit": "^2.0.1",

@@ -1,11 +1,16 @@
+const express = require('express');
+const cors = require('cors');
 const crypto = require('crypto');
 const axios = require('axios');
-require("dotenv").config();
+require('dotenv').config();
+
+const app = express();
+
+app.use(express.json());
+app.use(cors());
 
 
-
-
-
+app.use(cors());
 const newPayment = async (req, res) => {
   try {
    
@@ -36,8 +41,6 @@ const newPayment = async (req, res) => {
     };
 
     
-    
-
     const payload = JSON.stringify(data);
     const payloadMain = Buffer.from(payload).toString('base64');
     const keyIndex = 1;
@@ -47,7 +50,7 @@ const newPayment = async (req, res) => {
 
     const options = {
       method: 'POST',
-      url: 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay',
+      url: 'https://api.phonepe.com/apis/hermes/pg/v1/pay',
       headers: {
         accept: 'application/json',
         'Content-Type': 'application/json',
@@ -57,11 +60,13 @@ const newPayment = async (req, res) => {
         request: payloadMain
       }
     };
-
+    
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
     const response = await axios.request(options);
 
     console.log(response,"this is response from")
     res.redirect(response.data.data.instrumentResponse.redirectInfo.url);
+    
   } catch (error) {
     console.error(error);
     res.status(500).send({

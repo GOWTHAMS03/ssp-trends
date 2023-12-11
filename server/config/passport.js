@@ -39,7 +39,7 @@ module.exports = async app => {
 
   await googleAuth();
   await facebookAuth();
-  console.log(googleAuth(),"this is google")
+  
 };
 
 const googleAuth = async () => {

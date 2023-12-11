@@ -74,10 +74,14 @@ const config = {
     disableHostCheck: false,
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:3000'
-    }
-  },
-  devtool: 'eval-source-map'
+      '/api': {
+        target: 'http://localhost:3000', // Your backend server URL
+        secure: false,
+        changeOrigin: true,
+      }
+  }
+}
+  
 };
 
 module.exports = webpackMerge(common, config);

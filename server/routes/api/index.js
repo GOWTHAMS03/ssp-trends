@@ -18,6 +18,10 @@ const OrderTrack =require('../api/ordertrak');
 
 const { newPayment,checkStatus } = require('./payment');
 
+const cors = require('cors');
+
+// Apply CORS globally
+router.use(cors());
 
 // auth routes
 router.use('/auth', authRoutes);

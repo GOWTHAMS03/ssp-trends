@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '../../components/Common/Button';
 import Checkbox from '../../components/Common/Checkbox';
+import { makePayment } from '../../actions';
+import { connect } from 'react-redux';
+import actions from '../../actions';
+
+
+
 
 const PaymentForm = (props) => {
   const { addressFormData, cartItems, placeOrder, finalamount,user,orderitems } = props;
@@ -30,8 +36,7 @@ const PaymentForm = (props) => {
     paymentMethods:'online payment'
   });
 
-  console.log(formData,"formData")
-
+  
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [captcha, setCaptcha] = useState('');
   const [generatedCaptcha, setGeneratedCaptcha] = useState('');
@@ -60,28 +65,15 @@ const PaymentForm = (props) => {
 
   const handleSubmit = async () => {
     try {
-     
-  
-      const response = await axios.post('/api/payment/newPayment', formData);
-      // Assuming `formData` is defined and contains the necessary data
-  
-      window.location = response.data.redirectUrl;
-      console.log('PhonePe API Response:', response.data);
+      await props.makePayment(formData); // Dispatch the makePayment action
+      // Handle success or redirection logic here if needed
     } catch (error) {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        console.error('Server Error:', error.response.data);
-        console.error('Status Code:', error.response.status);
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('No response received:', error.request);
-      } else {
-        // Something happened in setting up the request that triggered an error
-        console.error('Error:', error.message);
-      }
-      console.error('Error Config:', error.config);
+      // Handle errors if needed
+      console.error('Error submitting payment:', error);
     }
   };
+    
+
 
 //   const handlePayment = (e)=>{
 //     e.preventDefault();
@@ -174,4 +166,16 @@ const PaymentForm = (props) => {
   );
 };
 
-export default PaymentForm;
+const mapStateToProps = state => {
+
+  console.log(state,"state")
+ 
+  return {
+    user: state.account.user
+  };
+};
+
+
+
+
+export default connect(mapStateToProps,actions)(PaymentForm);

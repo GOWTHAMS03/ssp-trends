@@ -32,6 +32,7 @@ import * as review from './containers/Review/actions';
 import * as wishlist from './containers/WishList/actions';
 import * as shipping from './containers/Shipping/action'
 import * as returnorder from './containers/Return/actions';
+import * as payment from './containers/Payment/action'
 
 
 
@@ -64,7 +65,8 @@ export default function mapDispatchToProps(dispatch) {
       ...review,
       ...wishlist,
       ...shipping,
-      ...returnorder
+      ...returnorder,
+      ...payment
 
     },
     dispatch
