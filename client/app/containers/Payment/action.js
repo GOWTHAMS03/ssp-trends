@@ -14,16 +14,19 @@ export const makePayment = (formData) => {
 
       const options = {
         method: 'POST',
+        
         headers: {
+          
           'Content-Type': 'application/json',
-          'Accept-Language': 'X-Requested-With,content-type,x-app-id, x-auth-token, id-mercur',
+          'Accept-Language': 'X-Requested-With,content-type,x-app-id, x-auth-token, id-mercury',
           'Origin': 'http://localhost:8080' // Replace with your frontend origin
         },
+     
         body: JSON.stringify(formData)
       };
       
       const response = await fetch('http://localhost:8080/api/payment/newPayment', options);
-      
+      console.log(response,"this is response")
       if (response.ok) {
         const responseData = response.status === 204 ? "STATUS CODE: 204" : (await response.json()).text;
         console.log('Payment successful:', responseData);
@@ -32,7 +35,7 @@ export const makePayment = (formData) => {
         // Dispatching a success notification using react-notification-system-redux
         dispatch(success({ title: 'Payment Successful', message: responseData }));
         // Redirect to a success page or any further handling
-        dispatch(push('/payment/success'));
+        dispatch(push('/api/payment/success'));
       } else {
         // Dispatching an error notification using react-notification-system-redux
         const errorMessage = await response.text();

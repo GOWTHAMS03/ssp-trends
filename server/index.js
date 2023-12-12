@@ -19,14 +19,22 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(cors());
+
+
+// app.use(cors({
+//   allowedHeaders: "*", allowedMethods: "*", origin: "*"
+//   }));
 
 
 const corsOptions = {
-  origin: '*',
-  methods: ['GET', 'POST', 'OPTIONS'], // Adjust as per your allowed methods
-  allowedHeaders: ['X-Requested-With', 'Content-Type', 'x-app-id', 'x-auth-token', 'id-mercur'],
+  origin: 'http://localhost:8080',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  allowedHeaders: 'Content-Type, Authorization,X-Requested-With,content-type,x-app-id, x-auth-token, id-mercury', // Adjust these headers according to your needs
+  credentials: true,
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
 };
+
+
 
 app.options('/api/payment/newPayment', cors(corsOptions), (req, res) => {
   res.sendStatus(200);
@@ -34,7 +42,7 @@ app.options('/api/payment/newPayment', cors(corsOptions), (req, res) => {
 
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "OPTIONS, GET, POST, PUT, PATCH, DELETE"

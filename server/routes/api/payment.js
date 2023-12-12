@@ -60,11 +60,11 @@ const newPayment = async (req, res) => {
         request: payloadMain
       }
     };
-    
-    res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
     const response = await axios.request(options);
 
-    console.log(response,"this is response from")
+   
     res.redirect(response.data.data.instrumentResponse.redirectInfo.url);
     
   } catch (error) {
@@ -79,17 +79,19 @@ const newPayment = async (req, res) => {
 
 const checkStatus = async(req, res) => {
 
-  console.log(req.params,"this is request")
-  console.log(res,"this is")
+  
   const merchantTransactionId = req.params['txnId']
   const merchantId = process.env.MERCHANT_ID
   const keyIndex = 2;
   const string = `/pg/v1/status/${merchantId}/${merchantTransactionId}` + process.env.SALT_KEY;
   const sha256 = crypto.createHash('sha256').update(string).digest('hex');
   const checksum = sha256 + "###" + keyIndex;
+
+  // https://api.phonepe.com/apis/hermes/pg/v1/pay
+
  const options = {
   method: 'GET',
-  url: `https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/${merchantId}/${merchantTransactionId}`,
+  url: `https://api.phonepe.com/apis/hermes/pg/v1/status/${merchantId}/${merchantTransactionId}`,
  
   headers: {
   accept: 'application/json',

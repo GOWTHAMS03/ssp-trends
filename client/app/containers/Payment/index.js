@@ -158,7 +158,7 @@ const PaymentForm = (props) => {
         <Button
           type="button"
           disabled={loading || !isProceedEnabled}
-          text={paymentMethods.includes('online') ? 'Proceed to Online Payment' : 'Proceed'}
+          text={paymentMethods.includes('online') ? 'Proceed to Online Payment' : 'PAY'}
           onClick={handlePayment}
         />
       </div>
